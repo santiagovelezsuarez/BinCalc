@@ -45,7 +45,35 @@ public class Binario implements Convertible
             exp++;
         }
         return new Decimal(dec);
+    }    
+    
+    public Binario sum(Binario bin)
+    {
+        String result = "";
+        int longest = this.num.length() > bin.getNum().length()?this.num.length():bin.getNum().length();
+        boolean carry = false;
+        for(int i=0; i<longest; i++)
+        {
+            char bit = sumBit(this.getLastBitAt(i), bin.getLastBitAt(i), carry)?'1':'0';
+            carry = (bin.getLastBitAt(i)&carry) | (this.getLastBitAt(i)&carry) | (this.getLastBitAt(i)&bin.getLastBitAt(i));
+            result = bit + result;
+        }        
+        return new Binario(result);
+        
+    }   
+    
+    private boolean sumBit(boolean b1, boolean b2, boolean carry)
+    {
+        return b1 ^ b2 ^ carry;
     }
+    
+    private boolean getLastBitAt(int pos)
+    {
+        int last = this.num.length()-1;
+        int i = last - pos;
+        return i>=0?this.num.charAt(i)=='1':false;
+    }
+    
     
     private boolean getBitAt(int pos)
     {

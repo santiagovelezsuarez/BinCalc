@@ -42,4 +42,9 @@ public class Calculadora
         return num.toDecimal();
     }
     
+    public Binario sum(Binario b1, Binario b2)
+    {
+        return b1.sum(b2);
+    }
+    
 }
