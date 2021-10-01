@@ -28,6 +28,10 @@ public class Main
         System.out.println("Dec = "+toDec.getNum());
         System.out.println("Dec2 = "+toDec2.getNum());
         System.out.println("Dec3 = "+toDec3.getNum());
+        System.out.println("-------");
+        Binario b1 = new Binario("1010101010101010");
+        Binario sum = b1.sum(new Binario("11111"));
+        System.out.println("Sum = "+sum.getNum());
         Vista vista = new Vista(calc);
         vista.setVisible(true);         
     }
