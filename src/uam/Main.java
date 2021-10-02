@@ -1,5 +1,6 @@
 package uam;
 
+import java.util.regex.Pattern;
 import uam.calc.Calculadora;
 import uam.calc.gui.Vista;
 import uam.model.Binario;
@@ -33,6 +34,8 @@ public class Main
         Binario sum = b1.sum(new Binario("11111"));
         System.out.println("Sum = "+sum.getNum());
         Vista vista = new Vista(calc);
-        vista.setVisible(true);         
+        vista.setVisible(true);  
+        boolean matches = Pattern.matches("([01]+)(((\\+?)([01]+)+)*)", "111");
+        System.out.println(matches);
     }
 }
