@@ -4,15 +4,13 @@ package uam.model;
  *
  * @author santi
  */
-public class Hexadecimal implements Convertible
-{
-    private final String num;
-    
+public class Hexadecimal extends Numero implements Convertible
+{    
     public static final char[] HEX = {'0','1','2','3','4','5','6','7','8','9', 'A', 'B', 'C', 'D', 'E', 'F'};
     
     public Hexadecimal(String num)
     {
-        this.num = num;
+        super(num);
     }
 
     @Override
@@ -47,18 +45,38 @@ public class Hexadecimal implements Convertible
             dec+= h * Math.pow(16, exp);
             exp++;
         }
-        return new Decimal(dec);
-    }   
-    
-    
-    private int getLastPos()
+        return new Decimal(String.valueOf(dec));
+    }  
+
+    @Override
+    public CA1 toCA1()
     {
-        return this.num.length()-1;
+        return this.toBinary().toCA1();
     }
-    
-    public String getNum()
+
+    @Override
+    public CA2 toCA2() 
     {
-        return this.num;
+        return this.toBinary().toCA2();
+    }
+
+    @Override
+    public Gray toGray() 
+    {
+        return this.toBinary().toGray();
+    }
+
+    @Override
+    public Numero sum(Numero num) 
+    {
+        Hexadecimal n2 = new Hexadecimal(num.getNum());       
+        return this.toBinary().sum(n2.toBinary());        
+    }
+
+    @Override
+    public String toString() 
+    {
+        return "Hexadecimal: "+getNum();
     }
     
 }

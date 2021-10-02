@@ -9,9 +9,11 @@ import java.util.regex.Pattern;
 import javax.swing.ButtonModel;
 import uam.calc.Calculadora;
 import uam.model.Binario;
+import uam.model.CA1;
 import uam.model.Convertible;
 import uam.model.Decimal;
 import uam.model.Hexadecimal;
+import uam.model.Numero;
 import uam.model.Octal;
 
 /**
@@ -20,7 +22,12 @@ import uam.model.Octal;
  */
 public class Vista extends javax.swing.JFrame 
 {
-    private Calculadora calculadora;
+    private final Calculadora calculadora;
+    
+    private final String DECIMAL = "decimal";
+    private final String HEXADECIMAL = "hexadecimal";
+    private final String BINARIO = "binario";
+    private final String OCTAL = "octal";
 
     /**
      * Creates new form Vista
@@ -44,7 +51,7 @@ public class Vista extends javax.swing.JFrame
         buttonGroup1 = new javax.swing.ButtonGroup();
         txInp = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        txaResult = new javax.swing.JTextArea();
         jRadioButton1 = new javax.swing.JRadioButton();
         jRadioButton2 = new javax.swing.JRadioButton();
         jRadioButton3 = new javax.swing.JRadioButton();
@@ -72,11 +79,11 @@ public class Vista extends javax.swing.JFrame
 
         txInp.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
 
-        jTextArea1.setEditable(false);
-        jTextArea1.setBackground(new java.awt.Color(204, 204, 204));
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        txaResult.setEditable(false);
+        txaResult.setBackground(new java.awt.Color(204, 204, 204));
+        txaResult.setColumns(20);
+        txaResult.setRows(5);
+        jScrollPane1.setViewportView(txaResult);
 
         buttonGroup1.add(jRadioButton1);
         jRadioButton1.setSelected(true);
@@ -195,6 +202,11 @@ public class Vista extends javax.swing.JFrame
         btnCA1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         btnCA1.setText("CA1");
         btnCA1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnCA1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCA1ActionPerformed(evt);
+            }
+        });
 
         btnCA2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         btnCA2.setText("CA2");
@@ -212,20 +224,24 @@ public class Vista extends javax.swing.JFrame
                     .addGroup(layout.createSequentialGroup()
                         .addGap(12, 12, 12)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txInp)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jRadioButton1)
-                                .addGap(18, 18, 18)
-                                .addComponent(jRadioButton2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
-                                .addComponent(jRadioButton3)
-                                .addGap(18, 18, 18)
-                                .addComponent(jRadioButton4))
-                            .addComponent(txInp))))
+                                .addGap(12, 12, 12)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lbSisN, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jRadioButton1)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jRadioButton2)
+                                        .addGap(48, 48, 48)
+                                        .addComponent(jRadioButton3)
+                                        .addGap(39, 39, 39)
+                                        .addComponent(jRadioButton4)
+                                        .addGap(53, 53, 53)))))))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lbSisN)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(btnP, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -256,7 +272,7 @@ public class Vista extends javax.swing.JFrame
                         .addComponent(btnE, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnF, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(211, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -268,9 +284,9 @@ public class Vista extends javax.swing.JFrame
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jRadioButton1)
-                    .addComponent(jRadioButton2)
                     .addComponent(jRadioButton3)
-                    .addComponent(jRadioButton4))
+                    .addComponent(jRadioButton4)
+                    .addComponent(jRadioButton2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lbSisN, javax.swing.GroupLayout.DEFAULT_SIZE, 61, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -381,21 +397,71 @@ public class Vista extends javax.swing.JFrame
         String in = txInp.getText();
         ButtonModel selection = buttonGroup1.getSelection();
         System.out.println(selection.getActionCommand());
-        if(!validateBinRegex(in))
+        switch(selection.getActionCommand())
         {
-            lbSisN.setText("Expresión malformada");
-            return;
+            case "decimal":
+                if(!validateDecRegex(in))
+                {
+                    lbSisN.setText("Expresión malformada");
+                    return;
+                }                
+                Decimal decimal = new Decimal(in);
+                Binario binario = decimal.toBinary();
+                Hexadecimal hexa = decimal.toHexadecimal();
+                Octal octal = decimal.toOctal();                
+                lbSisN.setText(binario.toString());
+                lbSisN.setText(lbSisN.getText()+"; ");
+                lbSisN.setText(lbSisN.getText()+hexa.toString());
+                lbSisN.setText(lbSisN.getText()+"; ");
+                lbSisN.setText(lbSisN.getText()+octal.toString());
+                break;
+            case "binario":
+                if(!validateBinRegex(in))
+                {
+                    lbSisN.setText("Expresión malformada");
+                    return;
+                }
+                Binario bin = new Binario(in);
+                Decimal toDecimal = calculadora.toDecimal(bin);
+                Hexadecimal toHexadecimal = calculadora.toHexadecimal(bin);
+                Octal toOctal = calculadora.toOctal(bin);
+                lbSisN.setText("Decimal: "+toDecimal.getNum());
+                lbSisN.setText(lbSisN.getText()+"; Hexadecimal: "+toHexadecimal.getNum());
+                lbSisN.setText(lbSisN.getText()+"; Octal: "+toOctal.getNum()); 
+                break;                
         }
+        
         // if bin sel
-        Binario bin = new Binario(in);
-        Decimal toDecimal = calculadora.toDecimal(bin);
-        Hexadecimal toHexadecimal = calculadora.toHexadecimal(bin);
-        Octal toOctal = calculadora.toOctal(bin);
-        lbSisN.setText("Decimal: "+toDecimal.getNum());
-        lbSisN.setText(lbSisN.getText()+"; Hexadecimal: "+toHexadecimal.getNum());
-        lbSisN.setText(lbSisN.getText()+"; Octal: "+toOctal.getNum());            
+                   
         
     }//GEN-LAST:event_btnEqActionPerformed
+
+    private void btnCA1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCA1ActionPerformed
+       
+        Convertible num = getIn();
+        CA1 toCA1 = num.toCA1();
+        txaResult.setText(txaResult.getText()+"\n"+txInp.getText()+"\n");
+        txaResult.setText(txaResult.getText()+"\n"+"CA1 "+toCA1.getNum()+"\n");
+        txInp.setText(toCA1.getNum());                
+    }//GEN-LAST:event_btnCA1ActionPerformed
+    
+    private Convertible getIn()
+    {
+        String in = txInp.getText();
+        String selection = buttonGroup1.getSelection().getActionCommand();
+        switch(selection)
+        {
+            case DECIMAL:
+                return new Decimal(in);
+            case BINARIO:
+                return new Binario(in);
+            case OCTAL:
+                return new Octal(in);
+            case HEXADECIMAL:
+                return new Hexadecimal(in);
+        }
+        throw new UnsupportedOperationException();
+    }
     
     private boolean validateBinOpRegex(String exp) 
     {
@@ -405,6 +471,11 @@ public class Vista extends javax.swing.JFrame
     private boolean validateBinRegex(String exp) 
     {
         return Pattern.matches("([01]+)", exp);
+    }
+    
+    private boolean validateDecRegex(String exp) 
+    {
+        return Pattern.matches("([0-9]+)", exp);
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -428,8 +499,8 @@ public class Vista extends javax.swing.JFrame
     private javax.swing.JRadioButton jRadioButton3;
     private javax.swing.JRadioButton jRadioButton4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JLabel lbSisN;
     private javax.swing.JTextField txInp;
+    private javax.swing.JTextArea txaResult;
     // End of variables declaration//GEN-END:variables
 }

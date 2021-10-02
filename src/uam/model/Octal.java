@@ -1,21 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package uam.model;
 
 /**
  *
  * @author santi
  */
-public class Octal implements Convertible
-{
-    private final String num;
-    
+public class Octal extends Numero implements Convertible
+{    
     public Octal(String num)
     {
-        this.num = num;
+        super(num);
     }
 
     @Override
@@ -50,16 +43,37 @@ public class Octal implements Convertible
             dec+= h * Math.pow(8, exp);
             exp++;
         }
-        return new Decimal(dec);
+        return new Decimal(String.valueOf(dec));
+    }   
+
+    @Override
+    public CA1 toCA1() 
+    {
+        return this.toBinary().toCA1();
+    }
+
+    @Override
+    public CA2 toCA2() 
+    {
+        return this.toBinary().toCA2();
+    }
+
+    @Override
+    public Gray toGray() 
+    {
+        return this.toBinary().toGray();
+    }
+
+    @Override
+    public Numero sum(Numero num) 
+    {
+        Octal n2 = new Octal(num.getNum());       
+        return this.toBinary().sum(n2.toBinary());         
     }
     
-    private int getLastPos()
+    @Override
+    public String toString() 
     {
-        return this.num.length()-1;
-    }
-    
-    public String getNum()
-    {
-        return this.num;
+        return "Octal: "+this.num;
     }
 }

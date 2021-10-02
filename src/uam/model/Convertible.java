@@ -15,4 +15,7 @@ public interface Convertible
     Hexadecimal toHexadecimal();
     Octal toOctal();
     Decimal toDecimal();
+    CA1 toCA1();
+    CA2 toCA2();
+    Gray toGray();    
 }
