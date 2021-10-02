@@ -1,5 +1,7 @@
 package uam.model;
 
+import java.util.regex.Pattern;
+
 /**
  *
  * @author santi
@@ -88,6 +90,6 @@ public class Binario implements Convertible
     public String getNum()
     {
         return this.num;
-    }
+    }    
     
 }

@@ -40,11 +40,11 @@ public class Decimal implements Convertible
         int idiv = this.num;
         while(idiv>=Hexadecimal.HEX.length)
         {
-            char h = Hexadecimal.HEX[idiv%15];
+            char h = Hexadecimal.HEX[idiv%16];
             idiv/=16;
             hex = h + hex;
         }
-        hex = Hexadecimal.HEX[idiv%15]+ hex;
+        hex = Hexadecimal.HEX[idiv%16]+ hex;
         return new Hexadecimal(hex);        
     }
 
@@ -66,7 +66,7 @@ public class Decimal implements Convertible
     @Override
     public Decimal toDecimal() 
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return this;
     }
     
     public int getNum()
