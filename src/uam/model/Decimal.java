@@ -1,28 +1,21 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package uam.model;
 
 /**
  *
  * @author santi
  */
-public class Decimal implements Convertible
-{
-    private final int num;
-    
-    public Decimal(int num)
+public class Decimal extends Numero implements Convertible
+{    
+    public Decimal(String num)
     {
-        this.num = num;
+        super(num);
     }
     
     @Override
     public Binario toBinary()
     {
       String bin = "";
-      int idiv = this.num;
+      int idiv = Integer.parseInt(this.num);
       while(idiv>0)
       {
           boolean mod = idiv % 2 == 1;
@@ -37,7 +30,7 @@ public class Decimal implements Convertible
     public Hexadecimal toHexadecimal() 
     {
         String hex = "";
-        int idiv = this.num;
+        int idiv = Integer.parseInt(this.num);
         while(idiv>=Hexadecimal.HEX.length)
         {
             char h = Hexadecimal.HEX[idiv%16];
@@ -52,7 +45,7 @@ public class Decimal implements Convertible
     public Octal toOctal() 
     {
         String oct = "";
-        int idiv = this.num;
+        int idiv = Integer.parseInt(this.num);
         while(idiv>8)
         {
             int o = idiv % 8;
@@ -67,11 +60,37 @@ public class Decimal implements Convertible
     public Decimal toDecimal() 
     {
         return this;
+    }   
+    
+    @Override
+    public CA1 toCA1() 
+    {
+        return this.toBinary().toCA1();
+    }
+
+    @Override
+    public CA2 toCA2()
+    {
+        return this.toBinary().toCA2();
+    }
+
+    @Override
+    public Gray toGray() 
+    {
+        return this.toBinary().toGray();
+    }
+
+    @Override
+    public Numero sum(Numero num) 
+    {        
+        Decimal n2 = new Decimal(num.getNum());       
+        return this.toBinary().sum(n2.toBinary());        
     }
     
-    public int getNum()
+    @Override
+    public String toString() 
     {
-        return this.num;
+        return "Decimal: "+this.num;
     }
     
 }

@@ -1,18 +1,13 @@
 package uam.model;
-
-import java.util.regex.Pattern;
-
 /**
  *
  * @author santi
  */
-public class Binario implements Convertible
-{
-    private final String num;
-    
+public class Binario extends Numero implements Convertible
+{    
     public Binario(String num)
     {
-        this.num = num;
+        super(num);
     }
 
     @Override
@@ -46,10 +41,11 @@ public class Binario implements Convertible
             dec+=getBitAt(i)?(Math.pow(2, exp)):0;
             exp++;
         }
-        return new Decimal(dec);
+        return new Decimal(String.valueOf(dec));
     }    
     
-    public Binario sum(Binario bin)
+    @Override
+    public Numero sum(Numero bin)
     {
         String result = "";
         int longest = this.num.length() > bin.getNum().length()?this.num.length():bin.getNum().length();
@@ -59,37 +55,61 @@ public class Binario implements Convertible
             char bit = sumBit(this.getLastBitAt(i), bin.getLastBitAt(i), carry)?'1':'0';
             carry = (bin.getLastBitAt(i)&carry) | (this.getLastBitAt(i)&carry) | (this.getLastBitAt(i)&bin.getLastBitAt(i));
             result = bit + result;
-        }        
+        }
+        if(carry)
+            result = '1'+result;
+        
         return new Binario(result);
         
     }   
     
-    private boolean sumBit(boolean b1, boolean b2, boolean carry)
+    protected boolean sumBit(boolean b1, boolean b2, boolean carry)
     {
         return b1 ^ b2 ^ carry;
     }
     
-    private boolean getLastBitAt(int pos)
+    protected boolean sumBit(boolean b1, boolean b2)
     {
-        int last = this.num.length()-1;
-        int i = last - pos;
-        return i>=0?this.num.charAt(i)=='1':false;
+        return b1 ^ b2;
+    }      
+
+    @Override
+    public CA1 toCA1() 
+    {
+        String result =  "";      
+        for(int i=0; i<this.num.length(); i++)
+        {
+            char bit = !getBitAt(i)?'1':'0';
+            result+=bit;
+        }        
+        return new CA1(result);
     }
-    
-    
-    private boolean getBitAt(int pos)
-    {
-        return this.num.charAt(pos)=='1';
+
+    @Override
+    public CA2 toCA2() 
+    {  
+       CA1 toCA1 = this.toCA1();       
+       Numero sum = toCA1.sum(new Binario("1"));    
+       return new CA2(sum.getNum());
     }
-    
-    private int getLastPos()
+
+    @Override
+    public Gray toGray() 
     {
-        return this.num.length()-1;
-    }
-    
-    public String getNum()
+        char msb = getBitAt(0)?'1':'0';
+        String result =  ""+msb;      
+        for(int i=0; i<this.num.length()-1; i++)
+        {
+            char bit = sumBit(getBitAt(i), getBitAt(i+1))?'1':'0';
+            result+=bit;
+        }        
+        return new Gray(result);
+    }  
+
+    @Override
+    public String toString() 
     {
-        return this.num;
+        return "Binario: "+this.num;
     }    
     
 }

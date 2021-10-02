@@ -6,9 +6,13 @@
 package uam.calc;
 
 import uam.model.Binario;
+import uam.model.CA1;
+import uam.model.CA2;
 import uam.model.Convertible;
 import uam.model.Decimal;
+import uam.model.Gray;
 import uam.model.Hexadecimal;
+import uam.model.Numero;
 import uam.model.Octal;
 
 /**
@@ -42,9 +46,24 @@ public class Calculadora
         return num.toDecimal();
     }
     
-    public Binario sum(Binario b1, Binario b2)
+    public Gray toGray(Convertible num)
     {
-        return b1.sum(b2);
+        return num.toGray();
     }
+    public CA1 toCA1(Convertible num)
+    {
+        return num.toCA1();
+    }
+    public CA2 toCA2(Convertible num)
+    {
+        return num.toCA2();
+    }
+    
+    public Numero sum(Numero n1, Numero n2)
+    {
+        return n1.sum(n2);
+    }
+    
+    
     
 }
