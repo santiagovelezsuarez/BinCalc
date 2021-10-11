@@ -380,6 +380,9 @@
           </Border>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnGrActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnCA1">
       <Properties>
@@ -409,6 +412,9 @@
           </Border>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCA2ActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

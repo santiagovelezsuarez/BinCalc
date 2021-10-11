@@ -10,6 +10,7 @@ import javax.swing.ButtonModel;
 import uam.calc.Calculadora;
 import uam.model.Binario;
 import uam.model.CA1;
+import uam.model.CA2;
 import uam.model.Convertible;
 import uam.model.Decimal;
 import uam.model.Hexadecimal;
@@ -198,6 +199,11 @@ public class Vista extends javax.swing.JFrame
         btnGr.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         btnGr.setText("GRAY");
         btnGr.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnGr.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGrActionPerformed(evt);
+            }
+        });
 
         btnCA1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         btnCA1.setText("CA1");
@@ -211,6 +217,11 @@ public class Vista extends javax.swing.JFrame
         btnCA2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         btnCA2.setText("CA2");
         btnCA2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnCA2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCA2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -395,6 +406,22 @@ public class Vista extends javax.swing.JFrame
     private void btnEqActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEqActionPerformed
         
         String in = txInp.getText();
+        if(validateBinOpRegex(in)&in.contains("+"))
+        {
+            Numero num1 = new Binario(in.substring(0, in.indexOf("+")));
+            Numero num2 = new Binario(in.substring(in.indexOf("+")+1));
+            Numero sum = calculadora.sum(num1, num2);
+            System.out.println("Sum: "+sum.getNum());
+            txaResult.setText(txaResult.getText()+"\n"+txInp.getText()+"\n");
+            txaResult.setText(txaResult.getText()+"\n"+"sum: "+sum.getNum()+"\n");
+            txInp.setText(sum.getNum()); 
+            return;
+        }
+        Decimal toDecimal;
+        Binario toBinario;
+        Octal toOctal;
+        Hexadecimal toHexadecimal;
+        
         ButtonModel selection = buttonGroup1.getSelection();
         System.out.println(selection.getActionCommand());
         switch(selection.getActionCommand())
@@ -405,15 +432,15 @@ public class Vista extends javax.swing.JFrame
                     lbSisN.setText("Expresión malformada");
                     return;
                 }                
-                Decimal decimal = new Decimal(in);
-                Binario binario = decimal.toBinary();
-                Hexadecimal hexa = decimal.toHexadecimal();
-                Octal octal = decimal.toOctal();                
-                lbSisN.setText(binario.toString());
+                Decimal decimal = new Decimal(in);                
+                toBinario = calculadora.toBinary(decimal);                
+                toHexadecimal = calculadora.toHexadecimal(decimal);
+                toOctal = calculadora.toOctal(decimal);                
+                lbSisN.setText(toBinario.toString());
                 lbSisN.setText(lbSisN.getText()+"; ");
-                lbSisN.setText(lbSisN.getText()+hexa.toString());
+                lbSisN.setText(lbSisN.getText()+toHexadecimal.toString());
                 lbSisN.setText(lbSisN.getText()+"; ");
-                lbSisN.setText(lbSisN.getText()+octal.toString());
+                lbSisN.setText(lbSisN.getText()+toOctal.toString());
                 break;
             case "binario":
                 if(!validateBinRegex(in))
@@ -422,13 +449,41 @@ public class Vista extends javax.swing.JFrame
                     return;
                 }
                 Binario bin = new Binario(in);
-                Decimal toDecimal = calculadora.toDecimal(bin);
-                Hexadecimal toHexadecimal = calculadora.toHexadecimal(bin);
-                Octal toOctal = calculadora.toOctal(bin);
+                toDecimal = calculadora.toDecimal(bin);
+                toHexadecimal = calculadora.toHexadecimal(bin);
+                toOctal = calculadora.toOctal(bin);
                 lbSisN.setText("Decimal: "+toDecimal.getNum());
                 lbSisN.setText(lbSisN.getText()+"; Hexadecimal: "+toHexadecimal.getNum());
                 lbSisN.setText(lbSisN.getText()+"; Octal: "+toOctal.getNum()); 
-                break;                
+                break;  
+            case "octal":
+                if(!validateOctRegex(in))
+                {
+                    lbSisN.setText("Expresión malformada");
+                    return;
+                }
+                Octal oct = new Octal(in);
+                toDecimal = calculadora.toDecimal(oct);
+                toBinario = calculadora.toBinary(oct);
+                toHexadecimal = calculadora.toHexadecimal(oct);
+                lbSisN.setText("Decimal: "+toDecimal.getNum());
+                lbSisN.setText(lbSisN.getText()+"; Binario: "+toBinario.getNum());
+                lbSisN.setText(lbSisN.getText()+"; Hexadecimal: "+toHexadecimal.getNum());
+                break;
+            case "hexadecimal":
+                if(!validateHexRegex(in))
+                {
+                    lbSisN.setText("Expresión malformada");
+                    return;
+                }
+                Hexadecimal hex = new Hexadecimal(in);
+                toDecimal = calculadora.toDecimal(hex);
+                toBinario = calculadora.toBinary(hex);
+                toOctal = calculadora.toOctal(hex);
+                lbSisN.setText("Decimal: "+toDecimal.getNum());
+                lbSisN.setText(lbSisN.getText()+"; Binario: "+toBinario.getNum());
+                lbSisN.setText(lbSisN.getText()+"; Octal: "+toOctal.getNum());
+                break;
         }
         
         // if bin sel
@@ -439,11 +494,23 @@ public class Vista extends javax.swing.JFrame
     private void btnCA1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCA1ActionPerformed
        
         Convertible num = getIn();
-        CA1 toCA1 = num.toCA1();
+        CA1 toCA1 = calculadora.toCA1(num);
         txaResult.setText(txaResult.getText()+"\n"+txInp.getText()+"\n");
         txaResult.setText(txaResult.getText()+"\n"+"CA1 "+toCA1.getNum()+"\n");
         txInp.setText(toCA1.getNum());                
     }//GEN-LAST:event_btnCA1ActionPerformed
+
+    private void btnCA2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCA2ActionPerformed
+        Convertible num = getIn();
+        CA2 toCA2 = calculadora.toCA2(num);
+        txaResult.setText(txaResult.getText()+"\n"+txInp.getText()+"\n");
+        txaResult.setText(txaResult.getText()+"\n"+"CA2 "+toCA2.getNum()+"\n");
+        txInp.setText(toCA2.getNum());  
+    }//GEN-LAST:event_btnCA2ActionPerformed
+
+    private void btnGrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGrActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnGrActionPerformed
     
     private Convertible getIn()
     {
@@ -476,6 +543,16 @@ public class Vista extends javax.swing.JFrame
     private boolean validateDecRegex(String exp) 
     {
         return Pattern.matches("([0-9]+)", exp);
+    }
+    
+    private boolean validateOctRegex(String exp) 
+    {
+        return Pattern.matches("([0-7]+)", exp);
+    }
+    
+    private boolean validateHexRegex(String exp) 
+    {
+        return Pattern.matches("([A-F0-9]+)", exp);
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
