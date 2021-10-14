@@ -1,13 +1,16 @@
 package uam.model;
+
+import java.util.regex.Pattern;
+
 /**
  *
  * @author santi
  */
 public class Binario extends Numero implements Convertible
 {    
-    public Binario(String num)
+    public Binario(String num) 
     {
-        super(num);
+        super(num);      
     }
 
     @Override
@@ -45,8 +48,9 @@ public class Binario extends Numero implements Convertible
     }    
     
     @Override
-    public Numero sum(Numero bin)
+    public Convertible sum(Convertible num)
     {
+        Binario bin = num.toBinary();
         String result = "";
         int longest = this.num.length() > bin.getNum().length()?this.num.length():bin.getNum().length();
         boolean carry = false;
@@ -89,7 +93,7 @@ public class Binario extends Numero implements Convertible
     public CA2 toCA2() 
     {  
        CA1 toCA1 = this.toCA1();       
-       Numero sum = toCA1.sum(new Binario("1"));    
+       Convertible sum = toCA1.sum(new Binario("1"));    
        return new CA2(sum.getNum());
     }
 
@@ -110,6 +114,12 @@ public class Binario extends Numero implements Convertible
     public String toString() 
     {
         return "Binario: "+this.num;
-    }    
+    } 
+    
+    @Override
+    public boolean validateRegex() 
+    {
+        return Pattern.matches("([01]+)", num);
+    }
     
 }

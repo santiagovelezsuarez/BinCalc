@@ -69,10 +69,9 @@ public class Gray extends Binario
         return this.num;
     }
 
-    @Override
-    public Numero sum(Numero num) 
-    {
-        Gray n2 = new Gray(num.getNum());       
-        return this.toBinary().sum(n2.toBinary());         
+   @Override
+    public Convertible sum(Convertible num) 
+    {        
+        return this.toBinary().sum(num);        
     }
 }

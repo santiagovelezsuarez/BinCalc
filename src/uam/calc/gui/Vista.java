@@ -72,6 +72,7 @@ public class Vista extends javax.swing.JFrame
         btnGr = new javax.swing.JButton();
         btnCA1 = new javax.swing.JButton();
         btnCA2 = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Calculadora");
@@ -223,36 +224,35 @@ public class Vista extends javax.swing.JFrame
             }
         });
 
+        jButton1.setBackground(new java.awt.Color(255, 153, 51));
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jButton1.setText("CLEAR");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txInp)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(12, 12, 12)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lbSisN, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jRadioButton1)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jRadioButton2)
-                                        .addGap(48, 48, 48)
-                                        .addComponent(jRadioButton3)
-                                        .addGap(39, 39, 39)
-                                        .addComponent(jRadioButton4)
-                                        .addGap(53, 53, 53)))))))
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnA, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnB, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnC, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnD, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnE, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnF, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(211, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(btnP, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -270,20 +270,33 @@ public class Vista extends javax.swing.JFrame
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btnGr, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnEq, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(btnEq, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1)
+                        .addGap(92, 92, 92))))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnA, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnB, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnC, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnD, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnE, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnF, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(211, Short.MAX_VALUE))
+                        .addContainerGap()
+                        .addComponent(jScrollPane1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txInp)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(12, 12, 12)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lbSisN, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jRadioButton1)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
+                                        .addComponent(jRadioButton2)
+                                        .addGap(48, 48, 48)
+                                        .addComponent(jRadioButton3)
+                                        .addGap(39, 39, 39)
+                                        .addComponent(jRadioButton4)
+                                        .addGap(53, 53, 53)))))))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -319,7 +332,8 @@ public class Vista extends javax.swing.JFrame
                     .addComponent(btnGr, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnCA1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnEq, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnCA2, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnCA2, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1))
                 .addGap(28, 28, 28))
         );
 
@@ -406,17 +420,30 @@ public class Vista extends javax.swing.JFrame
     private void btnEqActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEqActionPerformed
         
         String in = txInp.getText();
-        if(validateBinOpRegex(in)&in.contains("+"))
+        if(validateSumOp(in))
         {
-            Numero num1 = new Binario(in.substring(0, in.indexOf("+")));
-            Numero num2 = new Binario(in.substring(in.indexOf("+")+1));
-            Numero sum = calculadora.sum(num1, num2);
+            Convertible num1 = getIn(in.substring(0, in.indexOf("+")));
+            Convertible num2 = getIn(in.substring(in.indexOf("+")+1));
+            if(!num1.validateRegex() | !num2.validateRegex())
+            {
+                lbSisN.setText("Expresión malformada");
+                return;
+            }
+                
+            Convertible sum = calculadora.sum(num1, num2);
             System.out.println("Sum: "+sum.getNum());
             txaResult.setText(txaResult.getText()+"\n"+txInp.getText()+"\n");
             txaResult.setText(txaResult.getText()+"\n"+"sum: "+sum.getNum()+"\n");
-            txInp.setText(sum.getNum()); 
+            //txInp.setText(sum.getNum()); 
+            lbSisN.setText(sum.toBinary().toString());
+            lbSisN.setText(lbSisN.getText()+"; ");
+            lbSisN.setText(lbSisN.getText()+sum.toHexadecimal().toString());
+            lbSisN.setText(lbSisN.getText()+"; ");
+            lbSisN.setText(lbSisN.getText()+sum.toOctal().toString()); 
+            lbSisN.setText(lbSisN.getText()+"; ");
+            lbSisN.setText(lbSisN.getText()+sum.toDecimal().toString()); 
             return;
-        }
+        }        
         Decimal toDecimal;
         Binario toBinario;
         Octal toOctal;
@@ -497,7 +524,7 @@ public class Vista extends javax.swing.JFrame
         CA1 toCA1 = calculadora.toCA1(num);
         txaResult.setText(txaResult.getText()+"\n"+txInp.getText()+"\n");
         txaResult.setText(txaResult.getText()+"\n"+"CA1 "+toCA1.getNum()+"\n");
-        txInp.setText(toCA1.getNum());                
+        //txInp.setText(toCA1.getNum());                
     }//GEN-LAST:event_btnCA1ActionPerformed
 
     private void btnCA2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCA2ActionPerformed
@@ -505,14 +532,21 @@ public class Vista extends javax.swing.JFrame
         CA2 toCA2 = calculadora.toCA2(num);
         txaResult.setText(txaResult.getText()+"\n"+txInp.getText()+"\n");
         txaResult.setText(txaResult.getText()+"\n"+"CA2 "+toCA2.getNum()+"\n");
-        txInp.setText(toCA2.getNum());  
+        //txInp.setText(toCA2.getNum());  
     }//GEN-LAST:event_btnCA2ActionPerformed
 
     private void btnGrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGrActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnGrActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+       
+        lbSisN.setText("");
+        txInp.setText("");
+        txaResult.setText("");
+    }//GEN-LAST:event_jButton1ActionPerformed
     
-    private Convertible getIn()
+    private Convertible getIn() throws UnsupportedOperationException
     {
         String in = txInp.getText();
         String selection = buttonGroup1.getSelection().getActionCommand();
@@ -530,9 +564,46 @@ public class Vista extends javax.swing.JFrame
         throw new UnsupportedOperationException();
     }
     
+    private Convertible getIn(String num)
+    {        
+        String selection = buttonGroup1.getSelection().getActionCommand();
+        switch(selection)
+        {
+            case DECIMAL:
+                return new Decimal(num);
+            case BINARIO:
+                return new Binario(num);
+            case OCTAL:
+                return new Octal(num);
+            case HEXADECIMAL:
+                return new Hexadecimal(num);
+        }
+        throw new UnsupportedOperationException();
+    }
+    
+    private boolean validateSumOp(String exp)
+    {
+        return (validateBinOpRegex(exp)  | validateDecOpRegex(exp) | validateOctOpRegex(exp) | validateHexOpRegex(exp)) & exp.contains("+");
+    }
+    
     private boolean validateBinOpRegex(String exp) 
     {
         return Pattern.matches("([01]+)(((\\+?)([01]+)+)*)", exp);
+    }
+    
+    private boolean validateDecOpRegex(String exp) 
+    {
+        return Pattern.matches("([0-9]+)(((\\+?)([0-9]+)+)*)", exp);
+    }
+    
+    private boolean validateOctOpRegex(String exp) 
+    {
+        return Pattern.matches("([0-7]+)(((\\+?)([0-7]+)+)*)", exp);
+    }
+    
+    private boolean validateHexOpRegex(String exp) 
+    {
+        return Pattern.matches("([A-F0-9]+)(((\\+?)([A-F0-9]+)+)*)", exp);
     }
     
     private boolean validateBinRegex(String exp) 
@@ -571,6 +642,7 @@ public class Vista extends javax.swing.JFrame
     private javax.swing.JButton btnMB;
     private javax.swing.JButton btnP;
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JButton jButton1;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JRadioButton jRadioButton3;

@@ -59,7 +59,7 @@ public class Calculadora
         return num.toCA2();
     }
     
-    public Numero sum(Numero n1, Numero n2)
+    public Convertible sum(Convertible n1, Convertible n2)
     {
         return n1.sum(n2);
     }
