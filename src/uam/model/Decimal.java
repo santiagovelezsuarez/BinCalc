@@ -1,5 +1,7 @@
 package uam.model;
 
+import java.util.regex.Pattern;
+
 /**
  *
  * @author santi
@@ -81,16 +83,23 @@ public class Decimal extends Numero implements Convertible
     }
 
     @Override
-    public Numero sum(Numero num) 
+    public Convertible sum(Convertible num) 
     {        
-        Decimal n2 = new Decimal(num.getNum());       
-        return this.toBinary().sum(n2.toBinary());        
+        return this.toBinary().sum(num);        
     }
     
     @Override
     public String toString() 
     {
         return "Decimal: "+this.num;
+    }
+    
+    @Override
+    public boolean validateRegex() 
+    {
+        System.out.println("exp: "+num);
+        System.out.println("match: "+Pattern.matches("([0-9]+)", num));
+        return Pattern.matches("([0-9]+)", num);
     }
     
 }

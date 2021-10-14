@@ -1,5 +1,7 @@
 package uam.model;
 
+import java.util.regex.Pattern;
+
 /**
  *
  * @author santi
@@ -67,16 +69,21 @@ public class Hexadecimal extends Numero implements Convertible
     }
 
     @Override
-    public Numero sum(Numero num) 
-    {
-        Hexadecimal n2 = new Hexadecimal(num.getNum());       
-        return this.toBinary().sum(n2.toBinary());        
+    public Convertible sum(Convertible num) 
+    {        
+        return this.toBinary().sum(num);        
     }
 
     @Override
     public String toString() 
     {
         return "Hexadecimal: "+getNum();
+    }
+    
+    @Override
+    public boolean validateRegex() 
+    {
+        return Pattern.matches("([A-F0-9]+)", num);
     }
     
 }

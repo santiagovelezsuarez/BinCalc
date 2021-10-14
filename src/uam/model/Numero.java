@@ -8,12 +8,11 @@ public abstract class Numero
 {
     protected final String num;
     
-    public Numero(String num)
+    public Numero(String num) 
     {
+        
         this.num = num;
-    }   
-    
-    public abstract Numero sum(Numero num);
+    }    
     
     public String getNum()
     {

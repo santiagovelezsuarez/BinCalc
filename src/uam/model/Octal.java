@@ -1,5 +1,7 @@
 package uam.model;
 
+import java.util.regex.Pattern;
+
 /**
  *
  * @author santi
@@ -65,15 +67,20 @@ public class Octal extends Numero implements Convertible
     }
 
     @Override
-    public Numero sum(Numero num) 
-    {
-        Octal n2 = new Octal(num.getNum());       
-        return this.toBinary().sum(n2.toBinary());         
+    public Convertible sum(Convertible num) 
+    {        
+        return this.toBinary().sum(num);        
     }
     
     @Override
     public String toString() 
     {
         return "Octal: "+this.num;
+    }
+    
+    @Override
+    public boolean validateRegex() 
+    {
+        return Pattern.matches("([0-7]+)", num);
     }
 }

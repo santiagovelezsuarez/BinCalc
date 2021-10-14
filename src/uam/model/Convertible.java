@@ -17,5 +17,8 @@ public interface Convertible
     Decimal toDecimal();
     CA1 toCA1();
     CA2 toCA2();
-    Gray toGray();    
+    Gray toGray();
+    Convertible sum(Convertible n2);
+    String getNum();
+    boolean validateRegex();
 }
