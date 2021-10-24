@@ -89,6 +89,18 @@ public class Decimal extends Numero implements Convertible
     }
     
     @Override
+    public Convertible mult(Convertible num) 
+    {
+        return this.toBinary().mult(num);
+    }
+    
+    @Override
+    public Convertible div(Convertible n2) 
+    {
+       return new Decimal(String.valueOf(Integer.parseInt(this.num)/Integer.parseInt(n2.toDecimal().num)));       
+    }
+    
+    @Override
     public String toString() 
     {
         return "Decimal: "+this.num;
@@ -100,6 +112,6 @@ public class Decimal extends Numero implements Convertible
         System.out.println("exp: "+num);
         System.out.println("match: "+Pattern.matches("([0-9]+)", num));
         return Pattern.matches("([0-9]+)", num);
-    }
+    }  
     
 }

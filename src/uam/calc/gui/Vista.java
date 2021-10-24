@@ -13,6 +13,7 @@ import uam.model.CA1;
 import uam.model.CA2;
 import uam.model.Convertible;
 import uam.model.Decimal;
+import uam.model.Gray;
 import uam.model.Hexadecimal;
 import uam.model.Numero;
 import uam.model.Octal;
@@ -443,7 +444,55 @@ public class Vista extends javax.swing.JFrame
             lbSisN.setText(lbSisN.getText()+"; ");
             lbSisN.setText(lbSisN.getText()+sum.toDecimal().toString()); 
             return;
-        }        
+        }
+        if(validateMultOp(in))
+        {            
+            Convertible num1 = getIn(in.substring(0, in.indexOf("*")));
+            Convertible num2 = getIn(in.substring(in.indexOf("*")+1));
+            if(!num1.validateRegex() | !num2.validateRegex())
+            {                
+                lbSisN.setText("Expresión malformada");
+                return;
+            }
+                
+            Convertible mult = calculadora.mult(num1, num2);
+            System.out.println("Mult: "+mult.getNum());
+            txaResult.setText(txaResult.getText()+"\n"+txInp.getText()+"\n");
+            txaResult.setText(txaResult.getText()+"\n"+"mult: "+mult.getNum()+"\n");
+            //txInp.setText(sum.getNum()); 
+            lbSisN.setText(mult.toBinary().toString());
+            lbSisN.setText(lbSisN.getText()+"; ");
+            lbSisN.setText(lbSisN.getText()+mult.toHexadecimal().toString());
+            lbSisN.setText(lbSisN.getText()+"; ");
+            lbSisN.setText(lbSisN.getText()+mult.toOctal().toString()); 
+            lbSisN.setText(lbSisN.getText()+"; ");
+            lbSisN.setText(lbSisN.getText()+mult.toDecimal().toString()); 
+            return;
+        }
+        if(validateDivOp(in))
+        {
+            Convertible num1 = getIn(in.substring(0, in.indexOf("/")));
+            Convertible num2 = getIn(in.substring(in.indexOf("/")+1));
+            if(!num1.validateRegex() | !num2.validateRegex())
+            {
+                lbSisN.setText("Expresión malformada");
+                return;
+            }
+                
+            Convertible div = calculadora.div(num1, num2);
+            System.out.println("Sum: "+div.getNum());
+            txaResult.setText(txaResult.getText()+"\n"+txInp.getText()+"\n");
+            txaResult.setText(txaResult.getText()+"\n"+"div: "+div.getNum()+"\n");
+            //txInp.setText(sum.getNum()); 
+            lbSisN.setText(div.toBinary().toString());
+            lbSisN.setText(lbSisN.getText()+"; ");
+            lbSisN.setText(lbSisN.getText()+div.toHexadecimal().toString());
+            lbSisN.setText(lbSisN.getText()+"; ");
+            lbSisN.setText(lbSisN.getText()+div.toOctal().toString()); 
+            lbSisN.setText(lbSisN.getText()+"; ");
+            lbSisN.setText(lbSisN.getText()+div.toDecimal().toString()); 
+            return;
+        }
         Decimal toDecimal;
         Binario toBinario;
         Octal toOctal;
@@ -536,7 +585,11 @@ public class Vista extends javax.swing.JFrame
     }//GEN-LAST:event_btnCA2ActionPerformed
 
     private void btnGrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGrActionPerformed
-        // TODO add your handling code here:
+        Convertible num = getIn();
+        Gray toGray = calculadora.toGray(num);
+        txaResult.setText(txaResult.getText()+"\n"+txInp.getText()+"\n");
+        txaResult.setText(txaResult.getText()+"\n"+"GRAY  "+toGray.getNum()+"\n");
+        //txInp.setText(toCA2.getNum());  
     }//GEN-LAST:event_btnGrActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -586,24 +639,34 @@ public class Vista extends javax.swing.JFrame
         return (validateBinOpRegex(exp)  | validateDecOpRegex(exp) | validateOctOpRegex(exp) | validateHexOpRegex(exp)) & exp.contains("+");
     }
     
+    private boolean validateMultOp(String exp)
+    {
+        return (validateBinOpRegex(exp)  | validateDecOpRegex(exp) | validateOctOpRegex(exp) | validateHexOpRegex(exp)) & exp.contains("*");
+    }
+    
+    private boolean validateDivOp(String exp)
+    {
+        return (validateBinOpRegex(exp)  | validateDecOpRegex(exp) | validateOctOpRegex(exp) | validateHexOpRegex(exp)) & exp.contains("/");
+    }
+    
     private boolean validateBinOpRegex(String exp) 
     {
-        return Pattern.matches("([01]+)(((\\+?)([01]+)+)*)", exp);
+        return Pattern.matches("([01]+)(((\\+?\\*?\\/?\\-?)([01]+)+)*)", exp);
     }
     
     private boolean validateDecOpRegex(String exp) 
     {
-        return Pattern.matches("([0-9]+)(((\\+?)([0-9]+)+)*)", exp);
+        return Pattern.matches("([0-9]+)(((\\+?\\*?\\/?\\-?)([0-9]+)+)*)", exp);
     }
     
     private boolean validateOctOpRegex(String exp) 
     {
-        return Pattern.matches("([0-7]+)(((\\+?)([0-7]+)+)*)", exp);
+        return Pattern.matches("([0-7]+)(((\\+?\\*?\\/?\\-?)([0-7]+)+)*)", exp);
     }
     
     private boolean validateHexOpRegex(String exp) 
     {
-        return Pattern.matches("([A-F0-9]+)(((\\+?)([A-F0-9]+)+)*)", exp);
+        return Pattern.matches("([A-F0-9]+)(((\\+?\\*?\\/?\\-?)([A-F0-9]+)+)*)", exp);
     }
     
     private boolean validateBinRegex(String exp) 

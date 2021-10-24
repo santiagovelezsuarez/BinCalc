@@ -45,7 +45,26 @@ public class Binario extends Numero implements Convertible
             exp++;
         }
         return new Decimal(String.valueOf(dec));
-    }    
+    }   
+    
+    @Override
+    public Convertible mult(Convertible num) 
+    {
+        Decimal dec = num.toDecimal();   
+        System.out.println("dec: "+dec.num);
+        Convertible sum = this;
+        for(int i=1; i<Integer.parseInt(dec.getNum()); i++)
+        {
+            sum = this.sum(sum);
+        }
+        return sum;
+    }
+    
+    @Override
+    public Convertible div(Convertible num) 
+    {
+       return this.toDecimal().div(num);
+    }
     
     @Override
     public Convertible sum(Convertible num)
@@ -120,6 +139,6 @@ public class Binario extends Numero implements Convertible
     public boolean validateRegex() 
     {
         return Pattern.matches("([01]+)", num);
-    }
+    }   
     
 }

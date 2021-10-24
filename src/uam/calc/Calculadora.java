@@ -64,6 +64,14 @@ public class Calculadora
         return n1.sum(n2);
     }
     
+    public Convertible mult(Convertible n1, Convertible n2)
+    {
+        return n1.mult(n2);
+    }
     
+    public Convertible div(Convertible n1, Convertible n2)
+    {
+        return n1.div(n2);
+    }
     
 }

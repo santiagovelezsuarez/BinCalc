@@ -73,6 +73,18 @@ public class Octal extends Numero implements Convertible
     }
     
     @Override
+    public Convertible mult(Convertible num) 
+    {
+        return this.toBinary().mult(num);
+    }
+    
+    @Override
+    public Convertible div(Convertible num) 
+    {
+       return this.toDecimal().div(num);
+    }
+    
+    @Override
     public String toString() 
     {
         return "Octal: "+this.num;
