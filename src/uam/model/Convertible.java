@@ -19,6 +19,8 @@ public interface Convertible
     CA2 toCA2();
     Gray toGray();
     Convertible sum(Convertible n2);
+    Convertible mult(Convertible n2);
+    Convertible div(Convertible n2);
     String getNum();
     boolean validateRegex();
 }
